@@ -1,4 +1,4 @@
-name: Deploy to Production - aws
+name: Deploy to Production
 
 on:
   push:
@@ -13,9 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to VPS - aws-1-tgdev.be
+      - name: Add SSH key to known_hosts
+        run: |
+          ssh-keyscan -H 34.201.50.95 >> ~/.ssh/known_hosts
+
+      - name: Setup SSH key
+        run: |
+          echo "${{secrets.DEPLOY_KEY}}" > deploy_key
+          chmod 600 deploy_key
+          ssh-agent -s
+          ssh-add deploy_key
+
+      - name: Deploy to VPS
         run: |
           ssh ubuntu@34.201.50.95 "cd /var/repo/meusite.git && git --work-tree=/var/www/meusite --git-dir=/var/repo/meusite.git checkout -f"
-        env:
-          DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
-
