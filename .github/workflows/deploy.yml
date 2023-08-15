@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to VPS - aws-1-tgdev
+      - name: Deploy to VPS - aws-1-tgdev.be
         run: |
           ssh user@yourserver.com "cd /var/repo/meusite.git && git --work-tree=/var/www/meusite --git-dir=/var/repo/meusite.git checkout -f"
         env:
