@@ -1,0 +1,21 @@
+name: Deploy to Production - aws
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to VPS - aws-1-tgdev
+        run: |
+          ssh user@yourserver.com "cd /var/repo/meusite.git && git --work-tree=/var/www/meusite --git-dir=/var/repo/meusite.git checkout -f"
+        env:
+          DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
+
