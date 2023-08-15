@@ -23,7 +23,8 @@ jobs:
           echo "${{secrets.DEPLOY_KEY}}" > deploy_key
           chmod 600 deploy_key
           eval $(ssh-agent -s)
-          ssh-add deploy_key
+          echo "${{secrets.DEPLOY_KEY_PASSPHRASE}}" | ssh-add -p deploy_key
+        shell: /usr/bin/bash -e {0}
 
       - name: Deploy to VPS
         run: |
