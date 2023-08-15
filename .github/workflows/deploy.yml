@@ -15,6 +15,7 @@ jobs:
 
       - name: Add SSH key to known_hosts
         run: |
+          mkdir -p ~/.ssh
           ssh-keyscan -H 34.201.50.95 >> ~/.ssh/known_hosts
 
       - name: Setup SSH key
